@@ -1,4 +1,4 @@
-# demo-repo-project
+# demo-repo-github
 
 Página de demo para la clase de repositorios de código en GitHub.
 
@@ -11,7 +11,7 @@ Abre `index.html` en el navegador.
 1. Sube el repo a GitHub.
 2. Ve a **Settings → Pages**.
 3. En *Source* elige la rama `main` y la carpeta `/ (root)`.
-4. En un minuto estará en `https://<tu-usuario>.github.io/demo-repo-project/`.
+4. En un minuto estará en `https://valantoni.github.io/demo-repo-github/`.
 
 ## Ejercicio
 
