@@ -37,6 +37,11 @@
     .cmd button { flex: none; background: transparent; color: var(--code-text); border: 1px solid #3d444d;
                   border-radius: 6px; padding: 2px 10px; cursor: pointer; font-size: .8rem; }
     .cmd button:hover { border-color: var(--accent); }
+    details { margin-top: 8px; color: var(--muted); font-size: .95rem; }
+    summary { cursor: pointer; color: var(--accent); }
+    pre { background: var(--code-bg); color: var(--code-text); border-radius: 6px; padding: 8px 12px;
+          overflow-x: auto; font: 14px ui-monospace, Consolas, monospace; }
+    .steps input[type=checkbox] { float: right; width: 20px; height: 20px; accent-color: var(--accent); }
     footer { text-align: center; color: var(--muted); margin-top: 64px; font-size: .9rem; }
     a { color: var(--accent); }
   </style>
@@ -71,6 +76,49 @@
     <li><strong>Abrir un Pull Request</strong> en GitHub y pedir revisión</li>
     <li><strong>Actualizar</strong> tu <code>main</code> local tras el merge
       <div class="cmd"><code>git switch main &amp;&amp; git pull</code><button>Copiar</button></div></li>
+  </ol>
+
+  <h2>Ejercicio práctico: ramas y conflictos</h2>
+  <div class="card">
+    <p>En 15 minutos crearás un repo desde cero, trabajarás con dos ramas, provocarás un conflicto,
+      lo resolverás y lo subirás a GitHub. Usa <strong>Git Bash</strong> en Windows o la terminal en Mac/Linux.
+      Marca cada paso al terminarlo.</p>
+  </div>
+  <ol class="steps">
+    <li><input type="checkbox" aria-label="Paso 1 hecho"><strong>Crea un repositorio</strong> vacío
+      <div class="cmd"><code>mkdir practica-git &amp;&amp; cd practica-git &amp;&amp; git init -b main</code><button>Copiar</button></div></li>
+    <li><input type="checkbox" aria-label="Paso 2 hecho"><strong>Haz tu primer commit</strong>
+      <div class="cmd"><code>echo "Hola" &gt; saludo.txt &amp;&amp; git add saludo.txt &amp;&amp; git commit -m "Primer saludo"</code><button>Copiar</button></div>
+      <details><summary>¿Error "Please tell me who you are"?</summary>
+        Git necesita saber quién eres. Ejecuta una sola vez:
+        <pre>git config --global user.name "Tu Nombre"
+git config --global user.email "tu@email.com"</pre></details></li>
+    <li><input type="checkbox" aria-label="Paso 3 hecho"><strong>Crea una rama</strong> y cambia el saludo
+      <div class="cmd"><code>git switch -c ingles &amp;&amp; echo "Hello" &gt; saludo.txt &amp;&amp; git commit -am "Saludo en inglés"</code><button>Copiar</button></div></li>
+    <li><input type="checkbox" aria-label="Paso 4 hecho"><strong>Vuelve a main</strong> y cambia la misma línea
+      <div class="cmd"><code>git switch main &amp;&amp; echo "Hola, mundo" &gt; saludo.txt &amp;&amp; git commit -am "Saludo más largo"</code><button>Copiar</button></div>
+      <details><summary>Pregunta: ¿qué contiene ahora <code>saludo.txt</code>? ¿Y en la rama <code>ingles</code>?</summary>
+        En <code>main</code> pone "Hola, mundo" y en <code>ingles</code> pone "Hello". Cada rama tiene su propia versión del archivo.</details></li>
+    <li><input type="checkbox" aria-label="Paso 5 hecho"><strong>Fusiona las ramas</strong> y provoca un conflicto
+      <div class="cmd"><code>git merge ingles</code><button>Copiar</button></div>
+      <details><summary>¿Qué deberías ver?</summary>
+        Git avisa de <code>CONFLICT</code> porque las dos ramas cambiaron la misma línea. Abre <code>saludo.txt</code>:
+        <pre>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+Hola, mundo
+=======
+Hello
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; ingles</pre>
+        Deja el texto que quieras (por ejemplo "Hola, mundo / Hello") y borra las líneas con <code>&lt;&lt;&lt;</code>, <code>===</code> y <code>&gt;&gt;&gt;</code>.</details></li>
+    <li><input type="checkbox" aria-label="Paso 6 hecho"><strong>Termina el merge</strong> y mira el historial
+      <div class="cmd"><code>git add saludo.txt &amp;&amp; git commit -m "Resolver conflicto" &amp;&amp; git log --oneline --graph</code><button>Copiar</button></div>
+      <details><summary>Pregunta: ¿cuántos commits hay y por qué el gráfico se divide?</summary>
+        Hay 4 commits. El gráfico se separa en dos líneas (una por rama) y se vuelve a unir en el commit del merge.</details></li>
+    <li><input type="checkbox" aria-label="Paso 7 hecho"><strong>Súbelo a GitHub</strong>: crea un repo vacío llamado <code>practica-git</code> en
+      <a href="https://github.com/new">github.com/new</a> y conecta tu repo local (cambia <code>TU-USUARIO</code>)
+      <div class="cmd"><code>git remote add origin https://github.com/TU-USUARIO/practica-git.git &amp;&amp; git push -u origin main</code><button>Copiar</button></div>
+      <details><summary>Reto extra</summary>
+        Sube también la rama <code>ingles</code> con <code>git push origin ingles</code> y búscala en GitHub en el selector de ramas.
+        Luego entra en <em>Insights → Network</em> para ver el mismo gráfico que en el paso 6.</details></li>
   </ol>
 
   <h2>Ejercicio para la clase</h2>
