@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Demo Repo GitHub</title>
+  <style>
+    :root {
+      --bg: #f6f8fa; --card: #ffffff; --text: #1f2328; --muted: #59636e;
+      --border: #d1d9e0; --accent: #1f883d; --code-bg: #0d1117; --code-text: #e6edf3;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg: #0d1117; --card: #151b23; --text: #e6edf3; --muted: #9198a1;
+              --border: #3d444d; --accent: #3fb950; --code-bg: #010409; }
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font: 16px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif;
+           background: var(--bg); color: var(--text); }
+    main { max-width: 860px; margin: 0 auto; padding: 32px 16px 64px; }
+    header { text-align: center; padding: 32px 0; }
+    h1 { font-size: clamp(2rem, 5vw, 3rem); margin: 0 0 8px; }
+    header p { color: var(--muted); margin: 0; }
+    h2 { margin-top: 48px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
+    .card h3 { margin: 0 0 4px; font-size: 1rem; }
+    .card p { margin: 0; color: var(--muted); font-size: .95rem; }
+    ol.steps { padding-left: 0; list-style: none; counter-reset: s; }
+    ol.steps li { counter-increment: s; background: var(--card); border: 1px solid var(--border);
+                  border-radius: 8px; padding: 12px 16px; margin-bottom: 12px; }
+    ol.steps li::before { content: counter(s); display: inline-grid; place-items: center;
+                          width: 26px; height: 26px; border-radius: 50%; background: var(--accent);
+                          color: #fff; font-weight: 700; margin-right: 8px; font-size: .85rem; }
+    .cmd { display: flex; align-items: center; gap: 8px; margin-top: 8px; background: var(--code-bg);
+           color: var(--code-text); border-radius: 6px; padding: 8px 12px; overflow-x: auto; }
+    .cmd code { flex: 1; white-space: nowrap; font: 14px ui-monospace, Consolas, monospace; }
+    .cmd button { flex: none; background: transparent; color: var(--code-text); border: 1px solid #3d444d;
+                  border-radius: 6px; padding: 2px 10px; cursor: pointer; font-size: .8rem; }
+    .cmd button:hover { border-color: var(--accent); }
+    footer { text-align: center; color: var(--muted); margin-top: 64px; font-size: .9rem; }
+    a { color: var(--accent); }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>📦 Repositorios en GitHub</h1>
+    <p>Página de demo para la clase de control de versiones</p>
+  </header>
+
+  <h2>Conceptos clave</h2>
+  <div class="grid">
+    <div class="card"><h3>Repositorio</h3><p>Carpeta del proyecto con todo su historial de cambios.</p></div>
+    <div class="card"><h3>Commit</h3><p>Una "foto" de los archivos en un momento, con un mensaje que explica qué cambió.</p></div>
+    <div class="card"><h3>Branch (rama)</h3><p>Línea de trabajo paralela para probar cambios sin romper <code>main</code>.</p></div>
+    <div class="card"><h3>Pull Request</h3><p>Propuesta para unir tu rama a <code>main</code>, con revisión del equipo.</p></div>
+    <div class="card"><h3>Remote</h3><p>La copia del repo alojada en GitHub (<code>origin</code>).</p></div>
+    <div class="card"><h3>Fork</h3><p>Tu propia copia de un repo ajeno para contribuir sin permisos de escritura.</p></div>
+  </div>
+
+  <h2>Flujo de trabajo básico</h2>
+  <ol class="steps">
+    <li><strong>Clonar</strong> el repositorio a tu ordenador
+      <div class="cmd"><code>git clone https://github.com/usuario/demo-repo-project.git</code><button>Copiar</button></div></li>
+    <li><strong>Crear una rama</strong> para tu cambio
+      <div class="cmd"><code>git switch -c mi-cambio</code><button>Copiar</button></div></li>
+    <li><strong>Guardar cambios</strong> en un commit
+      <div class="cmd"><code>git add . &amp;&amp; git commit -m "Describe tu cambio"</code><button>Copiar</button></div></li>
+    <li><strong>Subir</strong> la rama a GitHub
+      <div class="cmd"><code>git push -u origin mi-cambio</code><button>Copiar</button></div></li>
+    <li><strong>Abrir un Pull Request</strong> en GitHub y pedir revisión</li>
+    <li><strong>Actualizar</strong> tu <code>main</code> local tras el merge
+      <div class="cmd"><code>git switch main &amp;&amp; git pull</code><button>Copiar</button></div></li>
+  </ol>
+
+  <h2>Ejercicio para la clase</h2>
+  <div class="card">
+    <p>Haz un fork de este repo, añade tu nombre a la lista de abajo editando <code>index.html</code> y abre un Pull Request.</p>
+  </div>
+  <ul id="alumnos">
+    <li>Profesor/a 👋</li>
+    <!-- Añade tu nombre aquí: <li>Tu Nombre</li> -->
+  </ul>
+
+  <footer>
+    Publicado con <a href="https://pages.github.com/">GitHub Pages</a>
+  </footer>
+</main>
+<script>
+  document.querySelectorAll('.cmd button').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(btn.previousElementSibling.textContent);
+        btn.textContent = '¡Copiado!';
+      } catch { btn.textContent = 'Error'; }
+      setTimeout(() => btn.textContent = 'Copiar', 1500);
+    });
+  });
+</script>
+</body>
+</html>
